@@ -36,6 +36,6 @@ const theme = {
   sizes,
 };
 
-export type Theme = typeof theme & DefaultTheme;
+export type Theme = typeof theme;
 
 export default theme;
