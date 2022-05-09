@@ -1,6 +1,7 @@
 export const fonts = {
   header: "'Clash Display'",
   bodyText: "'Poppins'",
+  bodyTextLight: "PoppinsLight",
 };
 
 export const fontSizes = {
@@ -18,6 +19,8 @@ export const fontSizes = {
 export const fontWeights = {
   LIGHT: 300,
   REGULAR: 400,
+  MEDIUM: 500,
+  SEMIBOLD: 600,
   BOLD: 700,
 };
 
@@ -54,8 +57,14 @@ export const textStyles = {
   },
   h5: {
     fontFamily: "header",
-    fontWeight: "BOLD",
+    fontWeight: "SEMIBOLD",
     fontSize: ["", "", "32"],
+    lineHeight: "S",
+  },
+  h6: {
+    fontFamily: "headers",
+    fontWeight: "MEDIUM",
+    fontSize: ["", "", "24"],
     lineHeight: "S",
   },
   paragraph: {
