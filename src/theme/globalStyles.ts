@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
   body {
     padding: 0;
     margin: 0;
-    font-family: ${({ theme }) => theme.fonts.body};
+    font-family: ${({ theme }) => theme.fonts.bodyText};
     -webkit-font-smoothing: antialiased;
   }
   a {
