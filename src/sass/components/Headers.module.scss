@@ -1,0 +1,52 @@
+@import "../variables";
+/*
+128px   8rem      h1
+96px    6rem      h2
+64px    4rem      h3
+48px    3rem      h4
+32px    2rem      h5
+24px    1.5rem    h6
+*/
+
+.handwritten-header {
+  font-family: "Pencerio-Hairline";
+  font-size: 8rem;
+  font-weight: 50;
+}
+
+.base-header {
+  font-family: "Clash Display";
+  line-height: 1.1;
+  white-space: pre-wrap;
+}
+
+.header-h1 {
+  @extend .base-header;
+  font-size: 8rem;
+  font-weight: 700;
+}
+.header-h2 {
+  @extend .base-header;
+  font-size: 6rem;
+  font-weight: 700;
+}
+.header-h3 {
+  @extend .base-header;
+  font-size: 4rem;
+  font-weight: 700;
+}
+.header-h4 {
+  @extend .base-header;
+  font-size: 3rem;
+  font-weight: 700;
+}
+.header-h5 {
+  @extend .base-header;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.header-h6 {
+  @extend .base-header;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
