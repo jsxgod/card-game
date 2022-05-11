@@ -1,0 +1,36 @@
+@import "../variables";
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  img {
+    border-radius: 1rem;
+  }
+}
+
+.menu-card-wrapper {
+  @extend .wrapper;
+  grid-column: 2 / 6;
+  grid-row: 2 / 6;
+  img {
+    filter: drop-shadow(0px 2px 2px darken($gray, 10%));
+  }
+}
+
+.small {
+  transform: scale(0.25);
+}
+
+.medium {
+  transform: scale(0.5);
+}
+
+.big {
+  transform: scale(1.25);
+}
+
+.fitLayout {
+  object-fit: contain;
+}
