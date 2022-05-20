@@ -5,7 +5,7 @@ import {
 import { MainGridBox } from "../../src/components/layout/grid";
 import styles from "../../src/sass/components/About.module.scss";
 
-export default function AboutPage() {
+export default function About() {
   return (
     <MainGridBox>
       <div className={styles.wrapper}>
