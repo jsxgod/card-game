@@ -1,0 +1,18 @@
+@import "../variables";
+.custom-input {
+  border: 1px solid transparent;
+  width: 100%;
+  font-family: "Clash Display";
+  font-weight: 600;
+  background-color: inherit;
+  outline: 1px solid inherit;
+  transition: border 0.15s ease-in-out;
+  color: $dark;
+  padding: 4px;
+  text-align: center;
+
+  &:focus {
+    outline: none;
+    border: 1px solid $dark;
+  }
+}
