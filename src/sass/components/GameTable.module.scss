@@ -1,0 +1,126 @@
+@import "../variables";
+.wrapper {
+  grid-row: 1 / -1;
+}
+.info-area-wrapper {
+  @extend .wrapper;
+  //background-color: rgba(red, 0.15);
+  position: relative;
+  grid-column: span 1;
+  box-shadow: 1px 0px 4px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 2rem 0 0 2rem;
+}
+.play-cards-area-wrapper {
+  @extend .wrapper;
+  //background-color: rgba(blue, 0.15);
+  grid-column: span 3;
+  transition: box-shadow 0.3s ease-in-out;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "opponent" "player";
+  .trick-card-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    .card-wrapper {
+      height: 75%;
+    }
+  }
+  .player-trick-card-wrapper {
+    @extend .trick-card-wrapper;
+    grid-area: player;
+    justify-content: flex-start;
+    .card-wrapper {
+      margin-left: 10%;
+    }
+  }
+  .opponent-trick-card-wrapper {
+    @extend .trick-card-wrapper;
+    grid-area: opponent;
+    justify-content: flex-end;
+    border-bottom: 1px solid darken($gray, 5%);
+    .card-wrapper {
+      margin-right: 10%;
+    }
+    .card-wrapper-red {
+      @extend .card-wrapper;
+      img {
+        filter: drop-shadow(0px 0px 2px $cardred);
+      }
+    }
+    .card-wrapper-blue {
+      @extend .card-wrapper;
+      img {
+        filter: drop-shadow(0px 0px 2px $cardblue);
+      }
+    }
+  }
+}
+.deck-area-wrapper {
+  @extend .wrapper;
+  //background-color: rgba(green, 0.15);
+  grid-column: span 2;
+  box-shadow: -1px 0px 4px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 0 2rem 2rem 0;
+  display: grid;
+  grid-template-rows: 3fr 6fr 3fr;
+  grid-template-areas: "trump" "deck" "info";
+  .trump-wrapper {
+    width: 100%;
+    height: 100%;
+    grid-area: "trump";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $dark;
+    gap: 2rem;
+  }
+  .deck-wrapper {
+    width: 100%;
+    height: 100%;
+    grid-area: "deck";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .card-wrapper {
+      padding: 2rem;
+      position: absolute;
+      height: 100%;
+      &:first-of-type {
+        transform: translateX(1rem);
+        filter: drop-shadow(0px 0px 1px darken($gray, 40%));
+      }
+      &:last-of-type {
+        transform: scale(0.85) translateX(-5rem);
+        filter: drop-shadow(0px 0px 4px darken($gray, 20%));
+      }
+    }
+  }
+  .info-wrapper {
+    width: 100%;
+    height: 100%;
+    grid-area: "info";
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1rem 0;
+    align-items: center;
+  }
+}
+
+.red-hover-shadow {
+  &:hover {
+    box-shadow: 0px 1px 2px 2px rgba($cardred, 0.2),
+      0px -1px 2px 2px rgba($cardred, 0.2);
+  }
+}
+
+.blue-hover-shadow {
+  &:hover {
+    box-shadow: 0px 1px 2px 2px rgba($cardblue, 0.2),
+      0px -1px 2px 2px rgba($cardblue, 0.2);
+  }
+}
