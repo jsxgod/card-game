@@ -1,12 +1,32 @@
 import { MenuCard } from "../src/components/atoms/Card/MenuCard";
 import { MainGridBox } from "../src/components/layout/grid/";
 import MainMenu from "../src/components/molecules/MainMenu";
-import { useState } from "react";
-import { SubMenuType } from "./types";
-import { HowTo, Profile } from "../src/components/organisms";
+import { useEffect } from "react";
+import { About, HowTo, Profile } from "../src/components/organisms";
+import { Curtain } from "../src/components/atoms/Curtain/Curtain";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateProfileAvatar,
+  updateProfileNickname,
+} from "../src/redux/actions/profileActions";
+import { RootState } from "../src/redux/store";
 
 export default function MainPage() {
-  const [subMenuOpened, setSubMenuOpened] = useState<SubMenuType>();
+  const dispatch = useDispatch();
+  const subMenuOpened = useSelector(
+    (state: RootState) => state.menu.subMenuOpened
+  );
+
+  useEffect(() => {
+    const localNickname = localStorage.getItem("whist-card-game-nickname");
+    const localAvatar = localStorage.getItem("whist-card-game-avatar");
+    if (localNickname) {
+      dispatch(updateProfileNickname(localNickname));
+    }
+    if (localAvatar) {
+      dispatch(updateProfileAvatar(JSON.parse(localAvatar)));
+    }
+  }, []);
 
   return (
     <MainGridBox>
@@ -25,12 +45,16 @@ export default function MainPage() {
       {subMenuOpened !== "profile" && (
         <MenuCard suit="spades" rank="K" belongsTo="deck" />
       )}
-      <MainMenu handleOpenSubmenu={setSubMenuOpened} />
+      <MainMenu />
       {subMenuOpened === "profile" ? (
         <Profile />
+      ) : subMenuOpened === "howto" ? (
+        <HowTo />
       ) : (
-        subMenuOpened === "howto" && (
-          <HowTo handleOpenSubmenu={setSubMenuOpened} />
+        subMenuOpened === "about" && (
+          <Curtain direction="down">
+            <About />
+          </Curtain>
         )
       )}
     </MainGridBox>
