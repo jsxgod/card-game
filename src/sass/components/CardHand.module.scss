@@ -1,0 +1,58 @@
+@import "../variables";
+
+.player-wrapper {
+  grid-row: -2 / -1;
+  grid-column: 2 / -2;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 2rem 2rem 0 0;
+  //overflow: hidden;
+  .card-wrapper {
+    position: relative;
+    top: 50%;
+    width: 6.25rem;
+    height: 100%;
+    margin-left: -1.25rem;
+    transition: top 0.15s ease-in-out, margin-right 0.15s ease-in-out;
+
+    &.selected-card {
+      top: 25%;
+      margin-right: 5rem;
+    }
+    &.cant-play {
+      top: 80%;
+    }
+    &:last-of-type {
+      margin-right: 0;
+    }
+    img {
+      pointer-events: none;
+    }
+  }
+}
+.opponent-wrapper {
+  @extend .player-wrapper;
+  grid-row: 1 / 2;
+  grid-column: 2 / -2;
+  border-radius: 0 0 2rem 2rem;
+  .card-wrapper {
+    top: -50%;
+    pointer-events: none;
+    &.selected-card {
+      top: -25%;
+      margin-right: 0;
+    }
+  }
+}
+
+.no-pointer-events {
+  pointer-events: none;
+}
+
+.hover {
+  &:hover {
+    cursor: grab;
+    top: 37.5%;
+  }
+}
