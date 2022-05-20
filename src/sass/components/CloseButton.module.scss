@@ -1,0 +1,22 @@
+@import "../variables";
+
+.button {
+  position: absolute;
+  top: 0;
+  right: 1.25rem;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $dark;
+  font-size: 4rem;
+  &.big {
+    font-size: 8rem;
+  }
+  &.medium {
+    font-size: 4rem;
+  }
+  &.small {
+    font-size: 1.5rem;
+  }
+}
