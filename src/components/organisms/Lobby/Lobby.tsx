@@ -31,7 +31,7 @@ import {
   setTrumpCard,
 } from "../../../redux/slices/gameSlice";
 import { useRouter } from "next/router";
-import { useGenerateRandomCard } from "../../../hooks/useGenerateRandomCard";
+import { useRandomCardGenerator } from "../../../hooks/useRandomCardGenerator";
 import { CardRank, CardSuit } from "../../atoms/Card/types";
 import { motion } from "framer-motion";
 
@@ -56,7 +56,7 @@ export function Lobby({ openedTab, handleOpenTab }: LobbyProps) {
   const socket = useContext(SocketContext);
   const dispatch = useDispatch();
   const router = useRouter();
-  const randomCardGenerator = useGenerateRandomCard(500);
+  const randomCardGenerator = useRandomCardGenerator(500);
 
   useEffect(() => {
     if (socket) {

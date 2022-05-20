@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useGenerateRandomCard } from "../../../hooks/useGenerateRandomCard";
+import { useRandomCardGenerator } from "../../../hooks/useRandomCardGenerator";
 import {
   updateProfileAvatar,
   updateProfileNickname,
@@ -15,7 +15,7 @@ export function Profile() {
   const dispatch = useAppDispatch();
   const nickname = useSelector((state: RootState) => state.profile.nickname);
   const avatar = useSelector((state: RootState) => state.profile.avatar);
-  const randomCardGenerator = useGenerateRandomCard(1000, "manual");
+  const randomCardGenerator = useRandomCardGenerator(1000, "manual");
 
   const handleChangeNickname = (value: string) => {
     dispatch(updateProfileNickname(value));
