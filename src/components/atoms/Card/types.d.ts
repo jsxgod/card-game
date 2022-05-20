@@ -20,10 +20,15 @@ export type CardRank =
 export type CardOwner = "red" | "blue" | "deck";
 
 interface Card {
-  suit: CardSuit;
   rank: CardRank;
+  suit: CardSuit;
   belongsTo: CardOwner;
   shows: "front" | "back";
+}
+
+export interface ReverseCardProps {
+  size: CardSize;
+  belongsTo: CardOwner;
 }
 
 type CardProps = {
