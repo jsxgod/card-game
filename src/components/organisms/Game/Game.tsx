@@ -1,7 +1,6 @@
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SocketContext from "../../../context/createContext";
-import { useGameState } from "../../../hooks/useGameState";
 import {
   addOpponentCard,
   addTrickCard,
@@ -33,7 +32,6 @@ import GameTable from "../../molecules/GameTable/GameTable";
 interface GameProps {}
 
 export function Game({}: GameProps) {
-  const nickname = useSelector((state: RootState) => state.profile.nickname);
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
   const isHost = useSelector((state: RootState) => state.player.isHost);
