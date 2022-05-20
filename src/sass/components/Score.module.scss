@@ -1,0 +1,118 @@
+@import "../variables";
+
+.wrapper {
+  position: relative;
+  grid-row: 3 / 5;
+  display: flex;
+  align-items: center;
+  .box {
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $dark;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 1.25rem);
+      transform: translateY(-50%);
+      //width: calc((100vw - (12 * 1.25rem) - 5rem) / 12);
+      width: 1rem;
+      height: 1px;
+      background-color: $dark;
+    }
+  }
+  .half {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    &:first-of-type {
+      justify-content: flex-start;
+      align-items: flex-end;
+    }
+    &:last-of-type {
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+  }
+  .score-box {
+    position: absolute;
+    top: 25%;
+    left: calc(100% + 1.25rem);
+    //width: calc((100vw - (12 * 1.25rem) - 5rem) / 12);
+    width: calc(((((100vw - 5rem) / 12) * 10) - 6 * 1.25rem) / 6);
+    height: 50%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    &::before {
+      content: "R";
+      font-family: "Clash Display";
+      font-weight: 600;
+      font-size: 0.75rem;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      height: 1rem;
+      padding: 0.5rem;
+      background-color: $white;
+      top: 50%;
+      left: 25%;
+      transform: translate(-50%, -50%);
+      z-index: 101;
+      filter: drop-shadow(0px 1px 1px darken($gray, 10%));
+    }
+    &::after {
+      content: "T";
+      font-family: "Clash Display";
+      font-weight: 600;
+      font-size: 0.75rem;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      height: 1rem;
+      padding: 0.5rem;
+      background-color: $white;
+      top: 50%;
+      left: 75%;
+      transform: translate(-50%, -50%);
+      z-index: 101;
+      filter: drop-shadow(0px 1px 1px darken($gray, 10%));
+    }
+    .score-row {
+      grid-row: span 1;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      font-family: Consolas;
+      font-size: 2rem;
+    }
+    .score-row-red {
+      @extend .score-row;
+      color: $cardred;
+    }
+    .score-row-blue {
+      @extend .score-row;
+      color: $cardblue;
+    }
+  }
+}
+
+.box-flex-center {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
