@@ -6,7 +6,7 @@
   justify-content: center;
   position: relative;
   img {
-    border-radius: 1rem;
+    border-radius: 0.5rem;
   }
 }
 
@@ -24,13 +24,15 @@
 }
 
 .medium {
-  transform: scale(0.5);
+  transform: scale(0.8);
 }
 
 .big {
-  transform: scale(1.25);
+  transform: scale(1.5);
+  filter: drop-shadow(0px 2px 2px darken($gray, 30%));
 }
 
 .fitLayout {
+  height: 100%;
   object-fit: contain;
 }
