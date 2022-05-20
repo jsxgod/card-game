@@ -1,0 +1,38 @@
+@import "../variables";
+
+.default-button {
+  padding: 2rem;
+  color: $red;
+  font-size: 2rem;
+  font-family: "Clash Display";
+  font-weight: 700;
+  width: 17rem;
+  height: 5.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+
+  &:disabled {
+    pointer-events: none;
+    color: rgba($red, 0.2);
+  }
+
+  //height 0
+  filter: drop-shadow(0px 1px 4px darken($gray, 20%));
+  transform: translateY(-1px);
+
+  // height 2
+  &:hover {
+    transform: translateY(-3px);
+    filter: drop-shadow(0px 1px 6px darken($gray, 20%));
+  }
+
+  // height 1
+  &:focus {
+    transform: translateY(0);
+    filter: drop-shadow(0px 1px 2px darken($gray, 30%));
+  }
+}
