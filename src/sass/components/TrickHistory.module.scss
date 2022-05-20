@@ -1,0 +1,55 @@
+@import "../variables";
+
+.wrapper {
+  padding: 1rem 0;
+  position: relative;
+  grid-column: -2 / -1;
+  grid-row: 2 / -2;
+  /*
+  transform: translateY(-1.25rem);
+  height: calc(100% + 2.5rem);
+  */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(26, 1fr);
+  color: $dark;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
+
+  .row-wrapper {
+    grid-row: span 1;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    //border-bottom: 1px solid $dark;
+    &:nth-of-type(26) {
+      border-bottom: none;
+    }
+    .flex-center-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .trick-number {
+        font-family: "Clash Display";
+        font-weight: 500;
+        font-size: 0.8rem;
+        line-height: 1;
+        margin-bottom: 0;
+      }
+      .trick-winner {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+.red-bg {
+  background-color: rgba($cardred, 0.8);
+}
+.blue-bg {
+  background-color: rgba($cardblue, 0.8);
+}
