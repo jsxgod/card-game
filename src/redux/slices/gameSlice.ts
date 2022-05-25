@@ -86,7 +86,6 @@ export const gameSlice = createSlice({
       state.trumpCard = action.payload;
     },
     setDominantSuit: (state, action: PayloadAction<CardSuit>) => {
-      console.log(`setting dominant suit to: ${action.payload}`);
       state.dominantSuit = action.payload;
     },
     resetDominantSuit: (state) => {
