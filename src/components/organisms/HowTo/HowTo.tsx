@@ -10,6 +10,7 @@ import {
 } from "../../atoms/Typography/Paragraphs";
 import { dictionaryEntries, sections } from "./data";
 import { DictionaryEntryProps, SectionProps } from "./types";
+import { AnimatePresence, motion } from "framer-motion";
 
 type HowToProps = {};
 
@@ -17,7 +18,18 @@ export function HowTo({}: HowToProps) {
   const dispatch = useDispatch();
   return (
     <>
-      <div className={styles.wrapper}>
+      <motion.div
+        className={styles.wrapper}
+        initial={{ top: "100%" }}
+        animate={{
+          top: "0",
+          transition: { duration: 0.6, ease: [0, 0.55, 0.45, 1] },
+        }}
+        exit={{
+          top: "100%",
+          transition: { duration: 0.4, ease: [0.55, 0, 1, 0.45] },
+        }}
+      >
         <div className={styles["title-wrapper"]}>
           <Header as="h1" content="How to play" />
         </div>
@@ -52,7 +64,7 @@ export function HowTo({}: HowToProps) {
             />
           ))}
         </div>
-      </div>
+      </motion.div>
       <CloseButton clickHandler={() => dispatch(closeSubMenus())} />
     </>
   );

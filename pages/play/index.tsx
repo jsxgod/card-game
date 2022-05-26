@@ -5,6 +5,8 @@ import styles from "../../src/sass/pages/PlayPage.module.scss";
 import { Header } from "../../src/components/atoms/Typography/Headers";
 import { Dispatch, SetStateAction, useState } from "react";
 import { LobbyTab } from "./types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../src/redux/store";
 
 export default function PlayPage() {
   const [openedTab, setOpenedTab] = useState<LobbyTab>("play");
@@ -24,6 +26,7 @@ interface TabSelectionProps {
 }
 
 function TabSelection({ openedTab, handleOpenTab }: TabSelectionProps) {
+  const gameID = useSelector((state: RootState) => state.player.gameID);
   return (
     <div className={styles["tab-selection-wrapper"]}>
       <div
@@ -39,6 +42,11 @@ function TabSelection({ openedTab, handleOpenTab }: TabSelectionProps) {
           styles[`tab-wrapper${openedTab === "join" ? "-active" : ""}`]
         }
         onClick={() => handleOpenTab("join")}
+        style={
+          gameID !== undefined
+            ? { pointerEvents: "none" }
+            : { pointerEvents: "auto" }
+        }
       >
         <Header as="h6" content="join" />
       </div>

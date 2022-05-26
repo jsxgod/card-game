@@ -32,7 +32,6 @@ nextApp.prepare().then(async () => {
         roomID: string;
         data: { nickname: string; avatar: { rank: CardRank; suit: CardSuit } };
       }) => {
-        console.log("joining room");
         const roomName = "game-" + args.roomID;
         const room = io.sockets.adapter.rooms.get(roomName);
         if (room !== undefined) {
@@ -42,9 +41,17 @@ nextApp.prepare().then(async () => {
             socket.to(roomName).emit("player-joined", {
               nickname: args.data.nickname,
               avatar: args.data.avatar,
+              gameID: roomName,
             });
-            console.log(io.sockets.adapter.rooms);
+            socket.emit("joined-lobby", {
+              status: "success",
+              gameID: roomName,
+            });
+          } else {
+            socket.emit("joined-lobby", { status: "failure", gameID: "" });
           }
+        } else {
+          socket.emit("joined-lobby", { status: "failure", gameID: "" });
         }
       }
     );
@@ -65,7 +72,6 @@ nextApp.prepare().then(async () => {
 
     // only emitted by the host
     socket.on("players-ready", (args: { roomID: string }) => {
-      console.log("SOCKET ON PLAYERS READY");
       const gameID = "game-" + args.roomID;
       const room = io.sockets.adapter.rooms.get(gameID);
       let opponentSocketID: string | undefined = undefined;
@@ -79,7 +85,7 @@ nextApp.prepare().then(async () => {
       }
       if (opponentSocketID === undefined) {
         console.log("game-creation-error");
-        io.to(gameID).emit("game-creation-error");
+        io.in(gameID).emit("game-creation-error");
       } else {
         const hostPlayer: GamePlayer = {
           color: undefined,
@@ -110,10 +116,9 @@ nextApp.prepare().then(async () => {
         };
 
         if (game !== undefined) {
-          console.log(games.filter((game) => game?.id === gameID));
           io.to(socket.id).emit("game-created", hostPayload);
           io.to(opponentSocketID).emit("game-created", opponentPayload);
-          io.to(gameID).emit("render-game", gameID);
+          io.in(gameID).emit("render-game", gameID);
         }
       }
     });
@@ -129,10 +134,10 @@ nextApp.prepare().then(async () => {
 
       if (response === "success") {
         socket.to(game.id).emit("opponent-played-card", args);
-        io.to(game.id).emit("plays-next", game.playsNext);
+        io.in(game.id).emit("plays-next", game.playsNext);
       } else if (response === "trick-scored") {
         socket.to(game.id).emit("opponent-played-card", args);
-        io.to(game.id).emit("score-trick", game.lastTrickWinner);
+        io.in(game.id).emit("score-trick", game.lastTrickWinner);
 
         //opponent
         const opponent = game.players.filter(
@@ -165,7 +170,7 @@ nextApp.prepare().then(async () => {
             );
           }
 
-          io.to(game.id).emit("new-faceup-card", game.faceUpCard);
+          io.in(game.id).emit("new-faceup-card", game.faceUpCard);
           //io.to(game.id).emit("plays-next", game.playsNext);
         }
       }
@@ -176,7 +181,7 @@ nextApp.prepare().then(async () => {
       if (!game || game.status === "finished") {
         return;
       }
-      io.to(game.id).emit("plays-next", game.playsNext);
+      io.in(game.id).emit("plays-next", game.playsNext);
       //socket.emit("plays-next", game.playsNext);
     });
 
@@ -186,7 +191,7 @@ nextApp.prepare().then(async () => {
       if (!game) {
         return;
       }
-      io.to(game.id).emit("switch-stage");
+      io.in(game.id).emit("switch-stage");
     });
 
     //round results
@@ -196,7 +201,7 @@ nextApp.prepare().then(async () => {
         return;
       }
       game.scoreRound();
-      io.to(game.id).emit("round-result", game.lastRoundWinner);
+      io.in(game.id).emit("round-result", game.lastRoundWinner);
     });
 
     //game results
@@ -206,7 +211,7 @@ nextApp.prepare().then(async () => {
         return;
       }
       game.scoreGame();
-      io.to(game.id).emit("game-result", game.gameWinner);
+      io.in(game.id).emit("game-result", game.gameWinner);
     });
 
     // request new round data
@@ -216,10 +221,8 @@ nextApp.prepare().then(async () => {
         return;
       }
       if (game.score.red === 4 || game.score.blue === 4) {
-        console.log("end");
-        console.log(game);
         game.scoreGame();
-        io.to(game.id).emit("game-result", game.gameWinner);
+        io.in(game.id).emit("game-result", game.gameWinner);
         return;
       }
       const hands = game.dealHands(); // takes 26 cards
@@ -252,14 +255,36 @@ nextApp.prepare().then(async () => {
         }
       }
       if (opponentSocketID) {
-        console.log("emitting new hands");
         io.to(socket.id).emit("new-round", hostPayload);
         io.to(opponentSocketID).emit("new-round", opponentPayload);
       }
     });
 
+    // disconnecting
+    socket.on("disconnecting", () => {
+      console.log("disconnecting");
+      const emitID = Array.from(socket.rooms.keys()).find(
+        (id) => id !== socket.id
+      );
+      if (emitID) {
+        io.in(emitID).emit("opponent-disconnected", socket.id);
+      }
+    });
+
     // disconnect
     socket.on("disconnect", () => {
+      const game = findGameBySocketID(socket.id);
+      if (game) {
+        io.in(game.id).emit("opponent-disconnected");
+        const idx = games.findIndex((g) => g?.id === game.id);
+        games.splice(idx, 1);
+      }
+      const emitID = Array.from(socket.rooms.keys()).find(
+        (id) => id !== socket.id
+      );
+      if (emitID) {
+        io.in(emitID).emit("opponent-disconnected", socket.id);
+      }
       console.log("client disconnected");
     });
   });

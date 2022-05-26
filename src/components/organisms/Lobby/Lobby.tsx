@@ -20,6 +20,7 @@ import SocketContext from "../../../context/createContext";
 import {
   addHand,
   setColor,
+  setGameID,
   setOpponentAvatar,
   setOpponentNickname,
   switchIsHost,
@@ -42,6 +43,8 @@ interface LobbyProps {
 
 export function Lobby({ openedTab, handleOpenTab }: LobbyProps) {
   const [joinLink, setJoinLink] = useState<string>("");
+  const [showInvalidLobbyCodeError, setShowInvalidLobbyCodeError] =
+    useState(false);
   const nickname = useSelector((state: RootState) => state.profile.nickname);
   const avatar = useSelector((state: RootState) => state.profile.avatar);
   const opponentNickname = useSelector(
@@ -59,12 +62,12 @@ export function Lobby({ openedTab, handleOpenTab }: LobbyProps) {
   const randomCardGenerator = useRandomCardGenerator(500);
 
   useEffect(() => {
-    if (socket) {
+    if (socket && socket.connected === true && socket.id !== undefined) {
       setTimeout(() => {
         linkDots.setIsWaiting(false);
       }, Math.floor(Math.random() * (5000 - 3000)) + 5000);
     }
-  }, []);
+  }, [socket?.id]);
 
   useEffect(() => {
     socket?.on(
@@ -72,16 +75,19 @@ export function Lobby({ openedTab, handleOpenTab }: LobbyProps) {
       (payload: {
         nickname: string;
         avatar: { rank: CardRank; suit: CardSuit };
+        gameID: string;
       }) => {
         playerDots.setIsWaiting(false);
         randomCardGenerator.setIsWaiting(false);
         dispatch(setOpponentNickname(payload.nickname));
         dispatch(setOpponentAvatar(payload.avatar));
+        dispatch(setGameID(payload.gameID));
         socket.emit("send-data", {
           roomName: socket.id,
           nickname,
           avatar,
         });
+        handleOpenTab("play");
       }
     );
     return () => {
@@ -145,15 +151,32 @@ export function Lobby({ openedTab, handleOpenTab }: LobbyProps) {
   }, []);
 
   const handleJoinLinkChanged = (value: string): void => {
+    setShowInvalidLobbyCodeError(false);
     setJoinLink(value);
   };
 
   const handleJoinLobby = () => {
     const args = { roomID: joinLink, data: { nickname, avatar } };
     socket?.emit("join-room", args);
-    dispatch(switchIsHost());
-    handleOpenTab("play");
   };
+
+  useEffect(() => {
+    socket?.on(
+      "joined-lobby",
+      (payload: { status: "success" | "failure"; gameID: string }) => {
+        if (payload.status === "success") {
+          dispatch(setGameID(payload.gameID));
+          dispatch(switchIsHost());
+          handleOpenTab("play");
+        } else if (payload.status === "failure") {
+          setShowInvalidLobbyCodeError(true);
+        }
+      }
+    );
+    return () => {
+      socket?.off("joined-lobby");
+    };
+  }, []);
 
   const handlePlayersReady = () => {
     if (!isHost) {
@@ -161,6 +184,16 @@ export function Lobby({ openedTab, handleOpenTab }: LobbyProps) {
     }
     socket?.emit("players-ready", { roomID: socket.id });
   };
+
+  useEffect(() => {
+    socket?.on("opponent-disconnected", (payload) => {
+      confirm("Opponent disconnected");
+      window.location.href = "/";
+    });
+    return () => {
+      socket?.off("opponent-disconnected");
+    };
+  }, []);
 
   return (
     <>
@@ -180,7 +213,7 @@ export function Lobby({ openedTab, handleOpenTab }: LobbyProps) {
                   content={`${
                     linkDots.isWaiting
                       ? linkDots.dots
-                      : socket
+                      : socket?.id
                       ? socket?.id
                       : "server error"
                   }`}
@@ -255,6 +288,7 @@ export function Lobby({ openedTab, handleOpenTab }: LobbyProps) {
               value={joinLink}
               handleOnChange={handleJoinLinkChanged}
               placeholder={". . ."}
+              invalid={showInvalidLobbyCodeError}
             />
           </div>
 

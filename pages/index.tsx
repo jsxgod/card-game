@@ -10,6 +10,7 @@ import {
   updateProfileNickname,
 } from "../src/redux/actions/profileActions";
 import { RootState } from "../src/redux/store";
+import { AnimatePresence } from "framer-motion";
 
 export default function MainPage() {
   const dispatch = useDispatch();
@@ -42,21 +43,21 @@ export default function MainPage() {
           zIndex: "0",
         }}
       ></span>
-      {subMenuOpened !== "profile" && (
-        <MenuCard suit="spades" rank="K" belongsTo="deck" />
-      )}
+      <MenuCard />
       <MainMenu />
-      {subMenuOpened === "profile" ? (
-        <Profile />
-      ) : subMenuOpened === "howto" ? (
-        <HowTo />
-      ) : (
-        subMenuOpened === "about" && (
-          <Curtain direction="down">
-            <About />
-          </Curtain>
-        )
-      )}
+      <AnimatePresence>
+        {subMenuOpened === "profile" ? (
+          <Profile />
+        ) : subMenuOpened === "howto" ? (
+          <HowTo />
+        ) : (
+          subMenuOpened === "about" && (
+            <Curtain direction="down">
+              <About />
+            </Curtain>
+          )
+        )}
+      </AnimatePresence>
     </MainGridBox>
   );
 }

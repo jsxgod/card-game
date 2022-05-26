@@ -37,9 +37,3 @@ type CardProps = {
   rank: CardRank;
   belongsTo: CardOwner;
 };
-
-export type MenuCardProps = {
-  suit: CardSuit;
-  rank: CardRank;
-  belongsTo: CardOwner;
-};

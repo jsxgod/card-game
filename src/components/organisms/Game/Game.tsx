@@ -177,6 +177,7 @@ export function Game({}: GameProps) {
       return;
     }
     if (roundOver) {
+      setPlaysNext(undefined);
       setTimeout(() => {
         socket?.emit("request-round-result");
       }, 1000);
@@ -185,6 +186,16 @@ export function Game({}: GameProps) {
       }, 3000);
     }
   }, [roundOver]);
+
+  useEffect(() => {
+    socket?.on("opponent-disconnected", (payload) => {
+      confirm("Opponent disconnected");
+      window.location.href = "/";
+    });
+    return () => {
+      socket?.off("opponent-disconnected");
+    };
+  }, []);
 
   return (
     <>

@@ -8,7 +8,7 @@ import {
   removeCardFromHand,
   setIsDraggingCard,
 } from "../../../redux/slices/playerSlice";
-import { addTrickCard } from "../../../redux/slices/gameSlice";
+import { addTrickCard, setPlaysNext } from "../../../redux/slices/gameSlice";
 import { ReverseCard } from "../../atoms/Card/ReverseCard";
 import { GameCard } from "../../../redux/slices/types";
 import SocketContext from "../../../context/createContext";
@@ -48,6 +48,7 @@ export function CardHand({ belongsTo }: CardHandProps) {
     if (isProperTarget) {
       dispatch(removeCardFromHand(card));
       dispatch(addTrickCard(card));
+      dispatch(setPlaysNext(undefined));
       socket?.emit("play-card", card);
     }
     setTimeout(() => {

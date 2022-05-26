@@ -14,6 +14,7 @@ export function MainMenu({}: MainMenuProps): JSX.Element {
   const openedSubMenu = useSelector(
     (state: RootState) => state.menu.subMenuOpened
   );
+  const nickname = useSelector((state: RootState) => state.profile.nickname);
 
   const handleOpenSubMenu = (subMenu: SubMenu): void => {
     if (openedSubMenu === subMenu) {
@@ -22,11 +23,16 @@ export function MainMenu({}: MainMenuProps): JSX.Element {
       dispatch(openSubMenu(subMenu));
     }
   };
+  const handleClickPlay = () => {
+    if (nickname === "") {
+      dispatch(openSubMenu("profile"));
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
-      <Link href="/play">
-        <div className={styles["item-wrapper"]}>
+      <Link href={nickname !== "" ? "/play" : ""}>
+        <div className={styles["item-wrapper"]} onClick={handleClickPlay}>
           <Header as="h1" content="Play" />
         </div>
       </Link>

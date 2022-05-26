@@ -16,3 +16,8 @@
     border: 1px solid $dark;
   }
 }
+
+.custom-input-invalid {
+  @extend .custom-input;
+  border: 1px solid $red;
+}

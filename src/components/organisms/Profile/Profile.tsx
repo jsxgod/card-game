@@ -10,6 +10,7 @@ import styles from "../../../sass/components/Profile.module.scss";
 import { Card } from "../../atoms/Card/Card";
 import Input from "../../atoms/Input/Input";
 import { Header } from "../../atoms/Typography/Headers";
+import { motion } from "framer-motion";
 
 export function Profile() {
   const dispatch = useAppDispatch();
@@ -37,7 +38,20 @@ export function Profile() {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <motion.div
+      className={styles.wrapper}
+      initial={{
+        transform: "translateX(-130%)",
+      }}
+      animate={{
+        transform: "translateX(0%)",
+        transition: { duration: 0.6, ease: [0, 0.55, 0.45, 1] },
+      }}
+      exit={{
+        transform: "translateX(-130%)",
+        transition: { duration: 0.4, ease: [0.55, 0, 1, 0.45] },
+      }}
+    >
       <div className={styles["item-wrapper"]}>
         <Header as="h5" content="nickname" />
       </div>
@@ -70,7 +84,7 @@ export function Profile() {
           }
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
 

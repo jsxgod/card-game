@@ -6,6 +6,7 @@ interface InputProps {
   placeholder?: string;
   handleOnChange: (param: string) => void;
   textSize?: TextSize;
+  invalid?: boolean;
 }
 
 type TextSize = "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
@@ -34,10 +35,11 @@ export function Input({
   placeholder = "type here...",
   textSize = "p",
   handleOnChange,
+  invalid = false,
 }: InputProps) {
   return (
     <input
-      className={styles["custom-input"]}
+      className={styles[`custom-input${invalid ? "-invalid" : ""}`]}
       value={value}
       onChange={(event) => handleOnChange(event.target.value)}
       type={"text"}
