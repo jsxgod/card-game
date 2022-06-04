@@ -40,17 +40,25 @@ export function Profile() {
   return (
     <motion.div
       className={styles.wrapper}
-      initial={{
-        transform: "translateX(-130%)",
-      }}
+      initial={
+        window.innerWidth > 1200
+          ? {
+              transform: "translateX(-130%)",
+            }
+          : {}
+      }
       animate={{
         transform: "translateX(0%)",
         transition: { duration: 0.6, ease: [0, 0.55, 0.45, 1] },
       }}
-      exit={{
-        transform: "translateX(-130%)",
-        transition: { duration: 0.4, ease: [0.55, 0, 1, 0.45] },
-      }}
+      exit={
+        window.innerWidth > 1200
+          ? {
+              transform: "translateX(-130%)",
+              transition: { duration: 0.4, ease: [0.55, 0, 1, 0.45] },
+            }
+          : {}
+      }
     >
       <div className={styles["item-wrapper"]}>
         <Header as="h5" content="nickname" />

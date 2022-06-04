@@ -2,7 +2,10 @@
 
 .body-text {
   font-family: "Poppins";
-  font-size: 1rem;
+  font-size: max(1rem, 16px);
+  @media (max-width: $tablet) {
+    font-size: max(1rem, 11px);
+  }
   line-height: 1.5;
   color: $dark;
   margin-bottom: 0.75rem;

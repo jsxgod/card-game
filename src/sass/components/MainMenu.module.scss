@@ -2,12 +2,16 @@
 
 .wrapper {
   background-color: inherit;
-  grid-column: 8 / 12;
+  grid-column: 8 / -1;
   grid-row: 2 / 6;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   row-gap: 1.25rem;
+  @media (max-width: $desktop) {
+    grid-column: 1 / 12;
+    z-index: 0;
+  }
   .item-wrapper {
     height: 25%;
     display: flex;
@@ -18,11 +22,19 @@
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
-    &:hover {
-      cursor: pointer;
-      //transform: scale(1.05);
-      transform: translateX(5%);
-      transition: 0.3s ease-out;
+    @media (min-width: $desktop) {
+      &:hover {
+        cursor: pointer;
+        //transform: scale(1.05);
+        transform: translateX(5%);
+        transition: 0.3s ease-out;
+      }
     }
+  }
+  .item-wrapper-selected {
+    @extend .item-wrapper;
+    color: $black;
+    transform: translateX(5%);
+    transition: 0.3s ease-out;
   }
 }

@@ -2,14 +2,15 @@
 
 .button {
   position: absolute;
-  top: 0;
-  right: 1.25rem;
+  top: 10%;
+  right: 3rem;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   color: $dark;
   font-size: 4rem;
+  background-color: transparent;
   &.big {
     font-size: 8rem;
   }

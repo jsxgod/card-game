@@ -13,7 +13,7 @@ export default function About({}: AboutProps) {
 
   return (
     <MainGridBox>
-      <CloseButton clickHandler={() => dispatch(closeSubMenus())} />
+      <CloseButton id="about" clickHandler={() => dispatch(closeSubMenus())} />
       <div className={styles.wrapper}>
         <Header as="h2" content={`Hope You enjoyed your stay on the`} />
       </div>

@@ -26,9 +26,12 @@
     height: 100%;
   }
   .title-wrapper {
-    grid-column: 2 / 9;
+    grid-column: 2 / -1;
     grid-row: 3 / 5;
     color: $red;
+    @media (max-width: $phone) {
+      grid-row: 3 / 4;
+    }
   }
   .sections-container {
     grid-column: 1 / 9;
@@ -38,6 +41,10 @@
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
+    }
+    @media (max-width: $phone) {
+      grid-column: 1 / -2;
+      grid-row: 4 / 13;
     }
     .section {
       display: grid;

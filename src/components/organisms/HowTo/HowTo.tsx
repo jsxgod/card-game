@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, Fragment, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
 import { closeSubMenus } from "../../../redux/slices/menuSlice";
 import styles from "../../../sass/components/HowTo.module.scss";
@@ -31,11 +31,11 @@ export function HowTo({}: HowToProps) {
         }}
       >
         <div className={styles["title-wrapper"]}>
-          <Header as="h1" content="How to play" />
+          <Header as="h2" content="How to play" />
         </div>
         <div className={styles["sections-container"]}>
           {sections.map((section) => (
-            <>
+            <Fragment key={"section-" + section.title}>
               <Section
                 key={"section-" + section.title}
                 title={section.title}
@@ -49,21 +49,26 @@ export function HowTo({}: HowToProps) {
                     description={subSection.description}
                   />
                 ))}
-            </>
+            </Fragment>
           ))}
         </div>
-        <div className={styles["dictionary-wrapper"]}>
-          <div className={styles["dictionary-header-wrapper"]}>
-            <Header as="h4" content="Dictionary" />
+        {window.innerWidth > 576 && (
+          <div className={styles["dictionary-wrapper"]}>
+            <div className={styles["dictionary-header-wrapper"]}>
+              <Header
+                as={window.innerWidth > 1200 ? "h4" : "h5"}
+                content="Dictionary"
+              />
+            </div>
+            {dictionaryEntries.map((entry) => (
+              <DictionaryEntry
+                key={entry.title}
+                title={entry.title}
+                description={entry.description}
+              />
+            ))}
           </div>
-          {dictionaryEntries.map((entry) => (
-            <DictionaryEntry
-              key={entry.title}
-              title={entry.title}
-              description={entry.description}
-            />
-          ))}
-        </div>
+        )}
       </motion.div>
       <CloseButton clickHandler={() => dispatch(closeSubMenus())} />
     </>

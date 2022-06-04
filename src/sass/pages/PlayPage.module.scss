@@ -6,10 +6,12 @@
   left: 5rem;
   display: flex;
   width: fit-content;
-  column-gap: 5rem;
   .tab-wrapper {
     color: rgba($dark, 0.3);
     transition: color 0.3s ease-in-out;
+    &:first-of-type {
+      margin-right: 5rem;
+    }
     &:hover {
       cursor: pointer;
       color: rgba($dark, 0.5);

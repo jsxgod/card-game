@@ -37,7 +37,13 @@ export function MainMenu({}: MainMenuProps): JSX.Element {
         </div>
       </Link>
       <div
-        className={styles["item-wrapper"]}
+        className={
+          styles[
+            openedSubMenu === "profile"
+              ? "item-wrapper-selected"
+              : "item-wrapper"
+          ]
+        }
         onClick={() => handleOpenSubMenu("profile")}
       >
         <Header as="h1" content="Profile" />

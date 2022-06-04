@@ -11,12 +11,14 @@ import {
 } from "../src/redux/actions/profileActions";
 import { RootState } from "../src/redux/store";
 import { AnimatePresence } from "framer-motion";
+import useWindowDimensions from "../src/hooks/useWindowDimensions";
 
 export default function MainPage() {
   const dispatch = useDispatch();
   const subMenuOpened = useSelector(
     (state: RootState) => state.menu.subMenuOpened
   );
+  const dimensions = useWindowDimensions();
 
   useEffect(() => {
     const localNickname = localStorage.getItem("whist-card-game-nickname");
@@ -31,18 +33,20 @@ export default function MainPage() {
 
   return (
     <MainGridBox>
-      <span
-        style={{
-          position: "absolute",
-          top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "1px",
-          height: "100%",
-          backgroundColor: "black",
-          zIndex: "0",
-        }}
-      ></span>
+      {dimensions?.width !== undefined && dimensions.width > 1200 && (
+        <span
+          style={{
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "1px",
+            height: "100%",
+            backgroundColor: "black",
+            zIndex: "0",
+          }}
+        ></span>
+      )}
       <MenuCard />
       <MainMenu />
       <AnimatePresence>
