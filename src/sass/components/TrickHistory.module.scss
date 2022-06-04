@@ -5,10 +5,6 @@
   position: relative;
   grid-column: -2 / -1;
   grid-row: 2 / -2;
-  /*
-  transform: translateY(-1.25rem);
-  height: calc(100% + 2.5rem);
-  */
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(26, 1fr);
