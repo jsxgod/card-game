@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { io, Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
-const socket = io("https://germanwhist-ksdev.herokuapp.com/");
+const socket = io("/");
 const SocketContext = createContext<Socket<
   DefaultEventsMap,
   DefaultEventsMap
