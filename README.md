@@ -2,11 +2,11 @@
 # German Whist card game
 
 A two player card game called the german whist. Coded with Next.js and Socket.io.
-###
-![cardgame](https://user-images.githubusercontent.com/22659815/172262217-f362c687-9471-46b2-af33-2994fb96c281.png)
-
 ## Website
 The project is available [here](https://germanwhist-ksdev.herokuapp.com).
+
+![cardgame](https://user-images.githubusercontent.com/22659815/172262217-f362c687-9471-46b2-af33-2994fb96c281.png)
+
 ## Technologies
 #### Design
 - Figma
