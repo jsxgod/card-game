@@ -1,5 +1,5 @@
 
-# German Whist card game
+# German Whist card game.
 
 A two player card game called the german whist. Coded with Next.js and Socket.io.
 ## Website
